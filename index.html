@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposta de programa mensal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241533;
+    --ink-soft:#3a2650;
+    --cream:#FBF6EE;
+    --paper:#FFFFFF;
+    --coral:#E8583F;
+    --coral-light:#FDE9E4;
+    --gold:#E3A73E;
+    --gold-light:#FBF0DB;
+    --teal:#1F6F6C;
+    --teal-light:#E5F1EF;
+    --line: rgba(36,21,51,0.12);
+    --line-soft: rgba(36,21,51,0.08);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Sora', sans-serif;
+    line-height:1.55;
+    padding-bottom:120px;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    margin:0;
+    color:var(--ink);
+  }
+  p{margin:0;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+  /* HERO */
+  .hero{
+    background: radial-gradient(circle at 12% 18%, rgba(232,88,63,0.35), transparent 45%),
+                radial-gradient(circle at 88% 8%, rgba(227,167,62,0.30), transparent 42%),
+                var(--ink);
+    color:var(--cream);
+    padding:72px 24px 64px;
+    opacity:0;
+    animation: rise 0.7s ease forwards;
+  }
+  @keyframes rise{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+  .hero-inner{max-width:680px; margin:0 auto;}
+  .hero h1{
+    font-size:clamp(30px, 4.6vw, 46px);
+    line-height:1.15;
+    letter-spacing:-0.01em;
+    color:var(--cream);
+  }
+  .hero p{
+    margin-top:18px;
+    font-size:17px;
+    color:rgba(251,246,238,0.82);
+    max-width:52ch;
+  }
+
+  main{max-width:1080px; margin:0 auto; padding:0 24px;}
+  .layout{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:48px;
+    padding-top:56px;
+  }
+  @media(min-width:900px){
+    .layout{grid-template-columns: 1fr 340px; align-items:start;}
+  }
+
+  section{margin-bottom:56px;}
+  section h2{font-size:24px; margin-bottom:8px;}
+  section > .lede{color:var(--ink-soft); opacity:0.72; font-size:15px; margin-bottom:24px; max-width:56ch;}
+
+  .section-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:8px;
+  }
+  .section-header h2{margin-bottom:0;}
+  .discount-btn{
+    font-family:'Sora', sans-serif;
+    font-size:13px;
+    font-weight:600;
+    color:var(--coral);
+    background:var(--coral-light);
+    border:1.5px solid var(--coral);
+    border-radius:999px;
+    padding:8px 16px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:background .18s ease, color .18s ease;
+  }
+  .discount-btn:hover{background:var(--coral); color:var(--cream);}
+  .discount-btn.active{background:var(--teal); border-color:var(--teal); color:var(--cream);}
+
+  /* BASE CARD */
+  .base-card{
+    background:var(--teal-light);
+    border:1px solid rgba(31,111,108,0.18);
+    border-radius:18px;
+    padding:28px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:24px;
+    align-items:center;
+  }
+  .base-price{
+    font-family:'Fraunces', serif;
+    font-size:38px;
+    font-weight:600;
+    color:var(--teal);
+    white-space:nowrap;
+  }
+  .base-price span{font-family:'Sora',sans-serif; font-size:15px; font-weight:500; color:var(--ink-soft); opacity:0.7;}
+  .base-list{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px; flex:1; min-width:220px;}
+  .base-list li{font-size:14.5px; color:var(--ink-soft); position:relative; padding-left:18px;}
+  .base-list li::before{content:"—"; position:absolute; left:0; color:var(--teal);}
+
+  /* PLAN CARDS */
+  .plan-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+  @media(min-width:640px){ .plan-grid{grid-template-columns:repeat(3,1fr);} }
+  .plan-card{
+    text-align:left;
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    border-radius:16px;
+    padding:20px;
+    cursor:pointer;
+    font-family:inherit;
+    transition:border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+  }
+  .plan-card:hover{transform:translateY(-2px);}
+  .plan-card.active{
+    border-color:var(--coral);
+    background:var(--coral-light);
+    box-shadow:0 8px 20px rgba(232,88,63,0.15);
+  }
+  .plan-card .plan-name{font-family:'Fraunces',serif; font-size:19px; font-weight:600;}
+  .plan-card .plan-total{font-size:26px; font-weight:600; font-family:'Fraunces',serif; margin-top:10px;}
+  .plan-card .plan-total span{font-size:13px; font-family:'Sora'; font-weight:500; opacity:0.6;}
+  .plan-card .plan-credit{font-size:13px; color:var(--ink-soft); opacity:0.75; margin-top:4px;}
+
+  /* CREDIT BAR */
+  .credit-bar-wrap{margin-bottom:28px;}
+  .credit-bar{
+    height:10px;
+    border-radius:6px;
+    background:var(--line-soft);
+    overflow:hidden;
+  }
+  .credit-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, var(--gold), var(--coral));
+    transition:width .25s ease;
+    border-radius:6px;
+  }
+  .credit-label{margin-top:8px; font-size:13.5px; color:var(--ink-soft); opacity:0.8;}
+
+  /* ITEM ROWS */
+  .item-list{display:flex; flex-direction:column; gap:12px;}
+  .item-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 18px;
+  }
+  .item-info{flex:1; min-width:0;}
+  .item-tag{
+    display:inline-block;
+    font-size:12px;
+    font-weight:600;
+    padding:2px 9px;
+    border-radius:999px;
+    margin-bottom:6px;
+  }
+  .tag-pesado{background:var(--coral-light); color:var(--coral);}
+  .tag-medio{background:var(--gold-light); color:#8a6314;}
+  .tag-leve{background:var(--teal-light); color:var(--teal);}
+  .item-tag .tag-original{transition:opacity .15s ease;}
+  .item-tag.discounted .tag-original{text-decoration:line-through; opacity:0.55; margin-right:6px; font-weight:500;}
+  .item-tag .tag-special{display:none; font-weight:700;}
+  .item-tag.discounted .tag-special{display:inline;}
+  .item-title{font-size:15px; font-weight:600;}
+  .item-desc{font-size:13.5px; color:var(--ink-soft); opacity:0.75; margin-top:2px;}
+  .item-price{font-size:13px; color:var(--ink-soft); opacity:0.6; margin-top:4px;}
+
+  .stepper{display:flex; align-items:center; gap:12px; flex-shrink:0;}
+  .stepper button{
+    width:32px; height:32px;
+    border-radius:50%;
+    border:1.5px solid var(--line);
+    background:var(--paper);
+    font-size:17px;
+    font-family:'Sora';
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ink);
+    transition:opacity .15s ease, border-color .15s ease;
+  }
+  .stepper button:hover:not(:disabled){border-color:var(--coral); color:var(--coral);}
+  .stepper button:disabled{opacity:0.3; cursor:not-allowed;}
+  .stepper .count{min-width:20px; text-align:center; font-weight:600; font-size:15px;}
+
+  /* EXTRAS */
+  .extra-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:12px;
+    flex-wrap:wrap;
+  }
+  .extra-row h3{font-size:15px; font-weight:600; font-family:'Sora';}
+  .extra-row .item-desc{margin-top:4px; max-width:38ch;}
+  .extra-price{font-size:14px; font-weight:600; color:var(--ink-soft); white-space:nowrap;}
+
+  .switch{position:relative; display:inline-block; width:42px; height:24px; flex-shrink:0;}
+  .switch input{opacity:0; width:0; height:0;}
+  .slider{
+    position:absolute; cursor:pointer; inset:0;
+    background:var(--line); border-radius:999px;
+    transition:.2s;
+  }
+  .slider::before{
+    content:""; position:absolute; height:18px; width:18px; left:3px; top:3px;
+    background:white; border-radius:50%; transition:.2s;
+    box-shadow:0 1px 3px rgba(0,0,0,0.25);
+  }
+  input:checked + .slider{background:var(--coral);}
+  input:checked + .slider::before{transform:translateX(18px);}
+
+  /* SUMMARY */
+  .summary{
+    background:var(--ink);
+    color:var(--cream);
+    border-radius:20px;
+    padding:24px;
+    position:sticky;
+    top:24px;
+  }
+  .summary h2{color:var(--cream); font-size:18px; margin-bottom:16px;}
+  .summary-line{
+    display:flex; justify-content:space-between;
+    font-size:14px; padding:9px 0;
+    border-bottom:1px solid rgba(251,246,238,0.12);
+    color:rgba(251,246,238,0.82);
+  }
+  .summary-total{
+    display:flex; justify-content:space-between;
+    align-items:baseline;
+    margin-top:16px; padding-top:16px;
+    border-top:1.5px solid rgba(251,246,238,0.25);
+  }
+  .summary-total .label{font-family:'Fraunces',serif; font-size:16px;}
+  .summary-total .value{font-family:'Fraunces',serif; font-size:30px; font-weight:600; color:var(--gold);}
+  .summary-note{font-size:12px; color:rgba(251,246,238,0.5); margin-top:14px; line-height:1.5;}
+  .summary-toggle{display:none;}
+
+  @media(max-width:899px){
+    .summary{
+      position:fixed;
+      left:14px; right:14px; bottom:14px;
+      z-index:50;
+      box-shadow:0 12px 32px rgba(0,0,0,0.35);
+      padding:16px 20px;
+      top:auto;
+    }
+    .summary-header{display:flex; align-items:center; justify-content:space-between; cursor:pointer;}
+    .summary-header h2{margin-bottom:0;}
+    .summary-detail{
+      max-height:0; overflow:hidden; transition:max-height .3s ease;
+    }
+    .summary.expanded .summary-detail{max-height:260px; margin-top:14px;}
+    .summary-toggle{
+      display:block;
+      font-size:12px;
+      color:rgba(251,246,238,0.6);
+      background:rgba(251,246,238,0.1);
+      border:none;
+      border-radius:999px;
+      padding:5px 12px;
+      font-family:'Sora';
+    }
+    .summary-total{margin-top:12px; padding-top:12px;}
+    .summary-total .value{font-size:24px;}
+  }
+
+  footer{
+    max-width:1080px; margin:0 auto; padding:8px 24px 40px;
+    font-size:12.5px; color:var(--ink-soft); opacity:0.55;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>Um programa que se ajusta ao seu mês</h1>
+    <p>Estratégia e execução para o Instagram e o LinkedIn, separadas em duas peças: uma base fixa de direção de conteúdo, e um orçamento flexível de produção que você monta conforme a agenda de cada mês.</p>
+  </div>
+</header>
+
+<main>
+  <div class="layout">
+    <div>
+
+      <section>
+        <h2>Base mensal</h2>
+        <p class="lede">Sempre inclusa, independente do plano escolhido: é o que sustenta a consistência do conteúdo.</p>
+        <div class="base-card">
+          <div class="base-price">R$400<span>/mês</span></div>
+          <ul class="base-list">
+            <li>Calendário editorial do mês</li>
+            <li>Uma call de alinhamento mensal</li>
+            <li>Aprimoramento dos textos que você escrever</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Escolha o tamanho do mês</h2>
+        <p class="lede">Cada faixa define quanto de produção cabe no mês. Você pode trocar de faixa a qualquer momento.</p>
+        <div class="plan-grid" id="planGrid">
+          <button class="plan-card" data-plan="enxuto">
+            <div class="plan-name">Enxuto</div>
+            <div class="plan-total">R$700<span>/mês</span></div>
+            <div class="plan-credit">R$300 em produção</div>
+          </button>
+          <button class="plan-card" data-plan="intermediario">
+            <div class="plan-name">Intermediário</div>
+            <div class="plan-total">R$1.150<span>/mês</span></div>
+            <div class="plan-credit">R$750 em produção</div>
+          </button>
+          <button class="plan-card" data-plan="completo">
+            <div class="plan-name">Completo</div>
+            <div class="plan-total">R$1.600<span>/mês</span></div>
+            <div class="plan-credit">R$1.200 em produção</div>
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-header">
+          <h2>Monte seu programa</h2>
+          <button class="discount-btn" id="discountBtn">Aplicar desconto de best friends</button>
+        </div>
+        <p class="lede">Distribua a produção do mês entre os formatos abaixo, dentro do valor da faixa escolhida.</p>
+
+        <div class="credit-bar-wrap">
+          <div class="credit-bar"><div class="credit-fill" id="creditFill"></div></div>
+          <p class="credit-label" id="creditLabel">R$0 de R$300 usados</p>
+        </div>
+
+        <div class="item-list">
+          <div class="item-row">
+            <div class="item-info">
+              <span class="item-tag tag-pesado" data-tier="pesado"><span class="tag-original"></span><span class="tag-special"></span></span>
+              <div class="item-title">Carrossel completo ou vídeo com efeitos</div>
+              <div class="item-desc">Design elaborado, ou vídeo com efeitos de texto na edição.</div>
+            </div>
+            <div class="stepper">
+              <button data-action="dec" data-tier="pesado">−</button>
+              <span class="count" id="count-pesado">0</span>
+              <button data-action="inc" data-tier="pesado">+</button>
+            </div>
+          </div>
+
+          <div class="item-row">
+            <div class="item-info">
+              <span class="item-tag tag-medio" data-tier="medio"><span class="tag-original"></span><span class="tag-special"></span></span>
+              <div class="item-title">Vídeo com edição simples</div>
+              <div class="item-desc">Corte de respiros e legendagem.</div>
+            </div>
+            <div class="stepper">
+              <button data-action="dec" data-tier="medio">−</button>
+              <span class="count" id="count-medio">0</span>
+              <button data-action="inc" data-tier="medio">+</button>
+            </div>
+          </div>
+
+          <div class="item-row">
+            <div class="item-info">
+              <span class="item-tag tag-leve" data-tier="leve"><span class="tag-original"></span><span class="tag-special"></span></span>
+              <div class="item-title">Post estático ou carrossel simples</div>
+              <div class="item-desc">Sem trabalho de design, só ajuste de cor e enquadramento.</div>
+            </div>
+            <div class="stepper">
+              <button data-action="dec" data-tier="leve">−</button>
+              <span class="count" id="count-leve">0</span>
+              <button data-action="inc" data-tier="leve">+</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Extras avulsos</h2>
+        <p class="lede">Cobrados à parte, fora do valor do plano. Use só quando precisar.</p>
+
+        <div class="extra-row">
+          <div>
+            <h3>Programação de postagens</h3>
+            <p class="item-desc">Inclui a legenda escrita do zero para cada post agendado no mês.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="programacaoToggle">
+            <span class="slider"></span>
+          </label>
+          <div class="extra-price" id="programacaoPrice">R$150/mês</div>
+        </div>
+
+        <div class="extra-row">
+          <div>
+            <h3>Captação presencial de vídeo</h3>
+            <p class="item-desc">R$100 por sessão. Nos meses em que você mesma gravar, esse valor não entra.</p>
+          </div>
+          <div class="stepper">
+            <button data-action="dec" data-tier="captacao">−</button>
+            <span class="count" id="count-captacao">0</span>
+            <button data-action="inc" data-tier="captacao">+</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="summary" id="summary">
+      <div class="summary-header" id="summaryHeader">
+        <h2>Resumo do mês</h2>
+        <button class="summary-toggle" id="summaryToggleBtn">detalhes</button>
+      </div>
+      <div class="summary-detail">
+        <div class="summary-line"><span>Base fixa</span><span id="sumBase">R$400</span></div>
+        <div class="summary-line"><span>Produção do plano</span><span id="sumCredits">R$0 de R$300</span></div>
+        <div class="summary-line"><span>Programação</span><span id="sumProg">—</span></div>
+        <div class="summary-line"><span>Captação avulsa</span><span id="sumCapt">—</span></div>
+      </div>
+      <div class="summary-total">
+        <span class="label">Total do mês</span>
+        <span class="value" id="sumTotal">R$400</span>
+      </div>
+      <p class="summary-note" id="summaryNote">Selecione uma faixa para montar o programa do mês.</p>
+    </aside>
+  </div>
+</main>
+
+<footer>Proposta válida para o período combinado. Valores podem ser revistos junto com o alinhamento mensal.</footer>
+
+<script>
+  const plans = {
+    enxuto:        { label: 'Enxuto',        credit: 300,  total: 700,  programacao: 150 },
+    intermediario: { label: 'Intermediário', credit: 750,  total: 1150, programacao: 250 },
+    completo:      { label: 'Completo',      credit: 1200, total: 1600, programacao: 350 }
+  };
+  const weightPrice = { pesado: 150, medio: 100, leve: 50 };
+  const originalPrice = { pesado: 350, medio: 250, leve: 120 };
+  const CAPTACAO_PRICE = 100;
+  const BASE = 400;
+
+  let state = {
+    plan: null,
+    counts: { pesado: 0, medio: 0, leve: 0 },
+    programacao: false,
+    captacao: 0,
+    discountApplied: false
+  };
+
+  const fmt = n => 'R$' + n.toLocaleString('pt-BR');
+
+  function creditsUsed(){
+    return state.counts.pesado*weightPrice.pesado + state.counts.medio*weightPrice.medio + state.counts.leve*weightPrice.leve;
+  }
+
+  function render(){
+    const planKey = state.plan;
+    const plan = planKey ? plans[planKey] : null;
+
+    // plan cards
+    document.querySelectorAll('.plan-card').forEach(card => {
+      card.classList.toggle('active', card.dataset.plan === planKey);
+    });
+
+    const used = creditsUsed();
+    const credit = plan ? plan.credit : 0;
+    const pct = plan ? Math.min(100, (used/credit)*100) : 0;
+    document.getElementById('creditFill').style.width = pct + '%';
+    document.getElementById('creditLabel').textContent = plan
+      ? `${fmt(used)} de ${fmt(credit)} usados`
+      : 'Escolha uma faixa acima para começar';
+
+    // steppers pesado/medio/leve
+    ['pesado','medio','leve'].forEach(tier => {
+      const tagEl = document.querySelector(`.item-tag[data-tier="${tier}"]`);
+      tagEl.classList.toggle('discounted', state.discountApplied);
+      tagEl.querySelector('.tag-original').textContent = fmt(originalPrice[tier]);
+      tagEl.querySelector('.tag-special').textContent = fmt(weightPrice[tier]);
+      document.getElementById('count-'+tier).textContent = state.counts[tier];
+      const incBtn = document.querySelector(`[data-action="inc"][data-tier="${tier}"]`);
+      const decBtn = document.querySelector(`[data-action="dec"][data-tier="${tier}"]`);
+      const remaining = credit - used;
+      incBtn.disabled = !plan || remaining < weightPrice[tier];
+      decBtn.disabled = state.counts[tier] === 0;
+    });
+
+    // captacao stepper
+    document.getElementById('count-captacao').textContent = state.captacao;
+    document.querySelector('[data-action="dec"][data-tier="captacao"]').disabled = state.captacao === 0;
+
+    // programacao price label
+    document.getElementById('programacaoPrice').textContent = plan ? fmt(plan.programacao) + '/mês' : '—';
+    document.getElementById('programacaoToggle').disabled = !plan;
+
+    // summary
+    document.getElementById('sumBase').textContent = fmt(BASE);
+    document.getElementById('sumCredits').textContent = plan ? `${fmt(used)} de ${fmt(credit)}` : '—';
+    document.getElementById('sumProg').textContent = (plan && state.programacao) ? fmt(plan.programacao) : '—';
+    document.getElementById('sumCapt').textContent = state.captacao > 0 ? `${fmt(state.captacao*CAPTACAO_PRICE)} (${state.captacao}x)` : '—';
+
+    const total = BASE + used + (plan && state.programacao ? plan.programacao : 0) + state.captacao*CAPTACAO_PRICE;
+    document.getElementById('sumTotal').textContent = fmt(total);
+
+    document.getElementById('summaryNote').textContent = plan
+      ? `Plano ${plan.label}: produção usada até o teto do mês.`
+      : 'Selecione uma faixa para montar o programa do mês.';
+  }
+
+  document.getElementById('planGrid').addEventListener('click', e => {
+    const card = e.target.closest('.plan-card');
+    if(!card) return;
+    state.plan = card.dataset.plan;
+    state.counts = { pesado:0, medio:0, leve:0 };
+    state.programacao = false;
+    document.getElementById('programacaoToggle').checked = false;
+    render();
+  });
+
+  document.querySelectorAll('.stepper button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tier = btn.dataset.tier;
+      const action = btn.dataset.action;
+      if(tier === 'captacao'){
+        state.captacao = Math.max(0, state.captacao + (action === 'inc' ? 1 : -1));
+      } else {
+        if(action === 'inc'){
+          const plan = plans[state.plan];
+          if(!plan) return;
+          const remaining = plan.credit - creditsUsed();
+          if(remaining >= weightPrice[tier]) state.counts[tier]++;
+        } else {
+          state.counts[tier] = Math.max(0, state.counts[tier]-1);
+        }
+      }
+      render();
+    });
+  });
+
+  document.getElementById('programacaoToggle').addEventListener('change', e => {
+    state.programacao = e.target.checked;
+    render();
+  });
+
+  document.getElementById('discountBtn').addEventListener('click', () => {
+    state.discountApplied = !state.discountApplied;
+    const btn = document.getElementById('discountBtn');
+    btn.textContent = state.discountApplied ? 'Desconto de best friends aplicado' : 'Aplicar desconto de best friends';
+    btn.classList.toggle('active', state.discountApplied);
+    render();
+  });
+
+  document.getElementById('summaryHeader').addEventListener('click', () => {
+    if(window.innerWidth <= 899){
+      document.getElementById('summary').classList.toggle('expanded');
+    }
+  });
+
+  render();
+</script>
+
+</body>
+</html>
